@@ -841,40 +841,40 @@ attack_prompt:	  	 .asciz "[0] Attack"
 dodge_prompt:	  	 .asciz "[1] Dodge"
 heal_prompt:	   	 .asciz "[2] Heal"
 heal_miscast_text:	 .asciz "The winds of magic are a volatile force..."
-skele_attacks_text:  .asciz "The skeleton moves toward you to attack!"
+skele_attacks_text: 	 .asciz "The skeleton moves toward you to attack!"
 skele_swing_text:	 .asciz "The skeleton swings it's sword and strikes you. You take damage!"
-damage_skele_text:   .asciz "You swing your sword and strike the skeleton."
-dodge_skele_text:    .asciz "You attempt to dodge the skeleton's attack!"
+damage_skele_text:   	 .asciz "You swing your sword and strike the skeleton."
+dodge_skele_text:    	 .asciz "You attempt to dodge the skeleton's attack!"
 successful_text:	 .asciz "You dodged the attack! The skeleton is vulnerable!"
 unsuccessful_text:	 .asciz "You couldn't dodge the attack!"
-defeated_skele_text: .asciz "The skeleton falls to the floor and remains motionless."
+defeated_skele_text: 	 .asciz "The skeleton falls to the floor and remains motionless."
 boss_spell_text:	 .asciz "The sorceror begins to cast a spell at you."
 boss_barrier_text:	 .asciz "The sorceror begins chanting in an alien language. An iridescent barrier forms around him."
 boss_heal_text:		 .asciz "The sorceror begins channeling dark magic to mend his wounds."
 boss_damaged_text:	 .asciz "You strike the sorceror with your sword!"
 boss_spell_hit:		 .asciz "The sorceror's spell hits you!"
 boss_heal_hit:		 .asciz "The sorceror finishes his spell, and rejuvinates himself!"
-strike_barrier_text: .asciz "You attempt to strike the sorceror, but your sword bounces off his barrier and hurts you!"
-player_heal_text:    .asciz "You channel the winds to mend some of your wounds."
-player_dodge_text:   .asciz "You dodge the spell!"
+strike_barrier_text: 	 .asciz "You attempt to strike the sorceror, but your sword bounces off his barrier and hurts you!"
+player_heal_text:    	 .asciz "You channel the winds to mend some of your wounds."
+player_dodge_text:   	 .asciz "You dodge the spell!"
 
 /**************************
 *  DEATH AND PLAY AGAIN
 **************************/
-death_text:			 .asciz "YOU DIED!"
-win_text:			 .asciz "The sorceror falls to the floor, defeated. You are victorious!"
-play_again_text:     .asciz "Press button 0 to play again"
+death_text:		 .asciz "YOU DIED!"
+win_text:		 .asciz "The sorceror falls to the floor, defeated. You are victorious!"
+play_again_text:     	 .asciz "Press button 0 to play again"
 
 /**************************
 *  RANDOM NUMBER DATA
 **************************/
 .align 2
-rand_max:  .word 3	      # maximum number (e.g. 100 gets 0-99)
-rand_seed: .word 1234567  # seed for random number generator
-rand_numb: .word 0        # store random number here
+rand_max:  .word 3		# maximum number (e.g. 100 gets 0-99)
+rand_seed: .word 1234567 	# seed for random number generator
+rand_numb: .word 0        	# store random number here
 /**********************************************************
 */
-						.end
+			.end
 /*
 ***********************************************************/
 
