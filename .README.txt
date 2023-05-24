@@ -1,17 +1,21 @@
 /**************************
-* 		   INTRO
+* 	INTRO
 **************************/
 This is my final project that I completed for my Computer Assembly &
 Organizations (CISP2410) class at Columbia State. It's a simple game where you
 delve into a dungeon to avoid traps, fight monsters, and defeat a
 final boss.
 
+This program run on the NIOS II DE-10 Lite computer which can be used here: 
+
+https://cpulator.01xz.net/?sys=nios-de10-lite
+
 Upon starting the game, you will be presented with a graphic
 and a prompt to press button 0 to start the game. Once you
 release button 0, the game will start.
 
 /**************************
-* 		 MOVEMENT
+*     MOVEMENT
 **************************/
 You will begin in room 1, which is an empty room. You will be 
 able to navigate rooms by using switches 0 - 3 for their 
@@ -21,7 +25,7 @@ and then prompt you to select a new direciton.
 
 
 /**************************
-* 		   ROOMS
+* 	ROOMS
 **************************/
 There are 4 different rooms that you can encounter in this game:
 
@@ -43,7 +47,7 @@ active. The same rule applies to skeleton rooms.
 
 
 /**************************
-* 		FINAL BOSS
+*     FINAL BOSS
 **************************/
 The final boss has three unique abilities as well as a passive aura
 that surrounds the player. The aura deals 1 point of health damage 
@@ -64,25 +68,23 @@ The boss' three abilities are:
 		
 
 /**************************
-* 		   MAP
+* 	MAP
 **************************/
 
 +--------+		+--------+		+--------+
 |        |		|        |		|        |
-|Skeleton|------|  Boss  |------| Empty  |
+|Skeleton|--------------|  Boss  |--------------| Empty  |
 |   6    |		|   7    |		|   8    |
 +--------+		+--------+		+--------+
-	|								|
-	|								|
-+--------+      +--------+      +--------+
-|        |      |        |      |        |
-|Skeleton|------|  Trap  |------|  Trap  |
-|   3    |      |   4    |      |   5    |
-+--------+      +------─-+      +--------+
-	|				|				|
-	|				|				|
-+--------+      +--------+      +--------+
-|        |      |        |      |        |
-| Empty  |------| Start  |------|Skeleton|
-|   0    |      |   1    |      |   2    |
-+--------+      +--------+      +--------+
+    |						    |
++--------+		+--------+		+--------+
+|        |		|        |		|        |
+|Skeleton|--------------|  Trap  |--------------|  Trap  |
+|   3    |		|   4    |		|   5    |
++--------+		+--------+		+--------+
+
++--------+		+--------+		+--------+
+|        |		|        |		|        |
+| Empty  |--------------| Start  |--------------|Skeleton|
+|   0    |		|   1    |		|   2    |
++--------+		+--------+		+--------+
