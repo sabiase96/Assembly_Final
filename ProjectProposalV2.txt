@@ -1,0 +1,39 @@
+1. I am proposing a warhammer inspired dungeon dwelling game in which the user plays as a sigmarite knight that is hunting
+	a rogue sorcerer in an abandoned dwarf karak. The player will navigate the dungeon in search of this sorcerer in order
+	to ultimately defeat them. The user will run into skeletons, traps, and empty corridors until they find the sorcerer.
+	The player will have to avoid traps and fight monsters as well as defeating a final boss to win the game. The player 
+	will be prompted with choices on the UART from which they will have to decide on how to proceed. Their choices will be 
+	taken by using the switch and button I/O devices on the DE-10 lite computer. The player will have to navigate, and 
+	battle his way to the end of the dungeon as well as defeating a final boss to win. Their health bar will be tracked on 
+	the LEDs, which will be easy for the player to keep track of at a glance.
+	
+2. My program will use the UART, LEDs, Buttons, switches and possibly the 7-seg display.
+
+3. User Input will be using the switches and buttons to navigate and fight. They will be prompted to flip swithces to select their 
+	path, and confirm it with a button press
+	[0] Forward
+	[1] Left
+	[2] Right
+	[3] Go back
+	
+	User input will also be used for combat, where the user will be either fighting a generic skeleton or the boss. All skeleton 
+	encounters will be the same, with them being defeted in two attacks. The user will have a choice to roll for healing instead
+	of attacks if they so choose.
+	[0] Attack
+	[1] Heal
+	[2] Dodge
+	
+4. Output will be on the UART, LEDs, and 7-seg display. The UART will describe where the user currently is, what is happening, 
+	and prompt the user again for their input on how they would like to proceed. The LEDs will show the player's health.
+	I would like to use the 7-seg display to show a message like "U DIED" or "U WIN" if possible, or to display a score.
+
+5. The first program change is when the user changes rooms. The user inputs a switch, and confirms with button preses. The program takes
+	input and changes where the user is at in the program. This will change which operation the program is running or to execute: encounter,
+	trap, empty room, boss.
+	
+6. The second program change is when the user is in an encounter with a monster or the boss. The combat will be a seperate operation that is
+	branched into if a room with a monster or the boss is entered. The player will then have to input how to navigate the fight with three 
+	options: Attack, Dodge, and Heal. All three of these will be different operations that impact the players health and progress forward.
+	
+7. The third program change is when the player wins the game. If the final boss is defeated, the program will congradulate the player on the UART
+	for completeing the game. 

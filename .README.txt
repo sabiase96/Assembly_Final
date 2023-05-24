@@ -1,0 +1,88 @@
+/**************************
+* 		   INTRO
+**************************/
+This is my final project that I completed for my Computer Assembly &
+Organizations (CISP2410) class at Columbia State. It's a simple game where you
+delve into a dungeon to avoid traps, fight monsters, and defeat a
+final boss.
+
+Upon starting the game, you will be presented with a graphic
+and a prompt to press button 0 to start the game. Once you
+release button 0, the game will start.
+
+/**************************
+* 		 MOVEMENT
+**************************/
+You will begin in room 1, which is an empty room. You will be 
+able to navigate rooms by using switches 0 - 3 for their 
+corresponding directions. If there is not a room in the direction 
+you have selected, the game will tell you there is a wall there 
+and then prompt you to select a new direciton.
+
+
+/**************************
+* 		   ROOMS
+**************************/
+There are 4 different rooms that you can encounter in this game:
+
+	- There is the empty room, which holds nothing within it.
+	
+	- A skeleton room, which holds a skeleton within that you must 
+		defeat before being allowed to continue.
+		
+	- A trap room, which deals 3 points of damage to the player's 
+		health bar.
+		
+	- The boss room, which holds the boss that the player must 
+		defeat to win the game.
+		
+Rooms are continuous, so if you move into a trap room, trigger
+the trap, move to a different room, and back track to the trap room,
+you will take another 3 points of damage because the trap is still
+active. The same rule applies to skeleton rooms.
+
+
+/**************************
+* 		FINAL BOSS
+**************************/
+The final boss has three unique abilities as well as a passive aura
+that surrounds the player. The aura deals 1 point of health damage 
+every turn of combat. So, the player is under constant pressure to 
+finish the fight before they run out of health.
+
+The boss' three abilities are:
+
+	- A damaging spell. The boss will begin casting a spell which
+		will do heavy damage to the player if it is not avoided.
+		
+	- A barrier. The boss will surround himself in a barrier that
+		protects him from any incoming damage. It also deals damage
+		to any would be attackers.
+	
+	- A heal. The boss will beging casting a healing spell which
+		completely restores his health to full if not interupted.
+		
+
+/**************************
+* 		   MAP
+**************************/
+
++--------+		+--------+		+--------+
+|        |		|        |		|        |
+|Skeleton|------|  Boss  |------| Empty  |
+|   6    |		|   7    |		|   8    |
++--------+		+--------+		+--------+
+	|								|
+	|								|
++--------+      +--------+      +--------+
+|        |      |        |      |        |
+|Skeleton|------|  Trap  |------|  Trap  |
+|   3    |      |   4    |      |   5    |
++--------+      +------─-+      +--------+
+	|				|				|
+	|				|				|
++--------+      +--------+      +--------+
+|        |      |        |      |        |
+| Empty  |------| Start  |------|Skeleton|
+|   0    |      |   1    |      |   2    |
++--------+      +--------+      +--------+
