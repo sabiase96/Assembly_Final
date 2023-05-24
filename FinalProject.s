@@ -373,19 +373,19 @@ skeleton:
 	movia r2, new_line
 	type
 	movia r2, skele_room
-	type							# Skeletons take 2 hits to defeat, r9 used to
-	movi  r9, 0						# keep track of how many hits the skeleton has taken
-	movi  r8, 0						# r8 used for flag to see if user dodged before attacking
+	type					# Skeletons take 2 hits to defeat, r9 used to
+	movi  r9, 0				# keep track of how many hits the skeleton has taken
+	movi  r8, 0				# r8 used for flag to see if user dodged before attacking
 	br skele_combat_prompt			#	
 	
-trap:								# user takes 3 points of damage for landing
-	movia  r2, new_line				# on a trap
-	type							#
+trap:						# user takes 3 points of damage for landing
+	movia  r2, new_line			# on a trap
+	type					#
 	movia  r2, trap_room			#
-	type							#
-	ldwio  r3, LED(r23)				#  
-	slli   r4, r3, 3				#
-	stwio  r4, LED(r23)				#
+	type					#
+	ldwio  r3, LED(r23)			#  
+	slli   r4, r3, 3			#
+	stwio  r4, LED(r23)			#
 	andi   r4, r4, 0x3ff			# bit mask for health bar
 	beq    r4, r0, death			#
 	br main
@@ -399,7 +399,7 @@ boss:
 	type
 	movia  r2, boss_room2
 	type
-	movi   r20, 5					# boss health. upon reaching 0, is defeated
+	movi   r20, 5				# boss health. upon reaching 0, is defeated
 	br boss_abilities	
 	
 	
@@ -413,93 +413,93 @@ boss:
 * 	SKELETON
 **************************/
 skele_combat_prompt:
-	bne    r8, r0, dodge_skip			# if user dodged last attack, skeleton is stunned
-	movi   r22, 0						# set heal flag to 0
-	movi   r21, 0						# reset dodge flag
-	movia  r2, new_line					#
-	type								#
+	bne    r8, r0, dodge_skip		# if user dodged last attack, skeleton is stunned
+	movi   r22, 0				# set heal flag to 0
+	movi   r21, 0				# reset dodge flag
+	movia  r2, new_line			#
+	type					#
 	movia  r2, skele_attacks_text		#
-	type								#
-dodge_skip:								#
-	combat_prompt						#
-	br skele_combat_button				# 
-skele_combat:							# reading player input
-	cmpeqi r5, r3, 1					#
-	bne    r5, r0, attack_skele			#
-	cmpeqi r5, r3, 2					#
-	bne    r5, r0, dodge_skele			#
+	type					#
+dodge_skip:					#
+	combat_prompt				#
+	br skele_combat_button			# 
+skele_combat:					# reading player input
+	cmpeqi r5, r3, 1			#
+	bne    r5, r0, attack_skele		#
+	cmpeqi r5, r3, 2			#
+	bne    r5, r0, dodge_skele		#
 	cmpeqi r5, r3, 4
 	bne    r5, r0, heal_roll
-	br skele_combat_prompt				#
-attack_skele:							# 
-	bne    r8, r0, damage_skele			# did player dodge first?
-	movia  r2, new_line					# then dont take damage
-	type								#
-	type								#
+	br skele_combat_prompt			#
+attack_skele:					# 
+	bne    r8, r0, damage_skele		# did player dodge first?
+	movia  r2, new_line			# then dont take damage
+	type					#
+	type					#
 player_damaged:
 	movia  r2, skele_swing_text 		# else user takes damage for not dodging
-	type								#
-	ldwio  r3, LED(r23)					#  
-	slli   r4, r3, 2					#
-	stwio  r4, LED(r23)					#
-	andi   r4, r4, 0x3ff				# bit mask for health bar
-	beq    r4, r0, death				#
+	type					#
+	ldwio  r3, LED(r23)			#  
+	slli   r4, r3, 2			#
+	stwio  r4, LED(r23)			#
+	andi   r4, r4, 0x3ff			# bit mask for health bar
+	beq    r4, r0, death			#
 	bne   r22, r0, skele_combat_prompt	# if player was healing, go back to prompt
 	bne   r21, r0, skele_combat_prompt	# if player was dodging, go back to prompt
-damage_skele:							# 
-	movi   r8, 0						# reset dodge flag
-	movia  r2, new_line					#
-	type								#
+damage_skele:					# 
+	movi   r8, 0				# reset dodge flag
+	movia  r2, new_line			#
+	type					#
 	movia  r2, damage_skele_text		# 
-	type								#
-	movia  r2, new_line					#
-	type								#	
-	addi   r9, r9, 1					# increment hits skeleton has taken
-	cmpeqi r7, r9, 2					# and see if it is two yet
-	bne    r7, r0, defeat_skele			# skeleton defeated if it is
-	br skele_combat_prompt				#
-dodge_skele:							#
-	movi   r21, 1						# dodge flag
-	movia  r2, new_line					#
-	type								#
-	movia  r2, dodge_skele_text			#
-	type								#
-	call random							#
-	ldw    r8, rand_numb(r0)			# 66.6% chance to dodge attack
-	cmpeqi r3, r8, 0					# 
+	type					#
+	movia  r2, new_line			#
+	type					#	
+	addi   r9, r9, 1			# increment hits skeleton has taken
+	cmpeqi r7, r9, 2			# and see if it is two yet
+	bne    r7, r0, defeat_skele		# skeleton defeated if it is
+	br skele_combat_prompt			#
+dodge_skele:					#
+	movi   r21, 1				# dodge flag
+	movia  r2, new_line			#
+	type					#
+	movia  r2, dodge_skele_text		#
+	type					#
+	call random				#
+	ldw    r8, rand_numb(r0)		# 66.6% chance to dodge attack
+	cmpeqi r3, r8, 0			# 
 	bne    r3, r0, unsuccessful_dodge	#
-	cmpeqi r3, r8, 1					#
+	cmpeqi r3, r8, 1			#
 	bne    r3, r0, successful_dodge		#
-	cmpeqi r3, r8, 2					#
+	cmpeqi r3, r8, 2			#
 	bne    r3, r0, successful_dodge		#
-	br skele_combat_prompt				#
+	br skele_combat_prompt			#
 	
-successful_dodge:						# player succesfully exectues dodge
-	movia  r2, new_line					#
-	type								#
-	movia  r2, successful_text			#
-	type								#
-	movia  r2, new_line					#
-	type								#
-	br skele_combat_prompt				#
+successful_dodge:				# player succesfully exectues dodge
+	movia  r2, new_line			#
+	type					#
+	movia  r2, successful_text		#
+	type					#
+	movia  r2, new_line			#
+	type					#
+	br skele_combat_prompt			#
 	
-unsuccessful_dodge:						# player unsuccesfully exectues dodge
-	movia  r2, new_line					#
-	type								#
+unsuccessful_dodge:				# player unsuccesfully exectues dodge
+	movia  r2, new_line			#
+	type					#
 	movia  r2, unsuccessful_text		#
-	type								#
-	movia  r2, new_line					#
-	type								#
-	br player_damaged					#
+	type					#
+	movia  r2, new_line			#
+	type					#
+	br player_damaged			#
 
-defeat_skele:							# display defeated skeleton text
-	movia  r2, new_line					# and branch back to movement
-	type								#
+defeat_skele:					# display defeated skeleton text
+	movia  r2, new_line			# and branch back to movement
+	type					#
 	movia  r2, defeated_skele_text		#
-	type								#
-	br main								#
-heal_roll:								#
-	movi   r22, 1						# heal flag
+	type					#
+	br main					#
+heal_roll:					#
+	movi   r22, 1				# heal flag
 	call random
 	ldw    r5, rand_numb(r0)
 	cmpeqi r6, r5, 0
@@ -517,12 +517,12 @@ heal_cast:
 	movia  r2, new_line
 	type
 	ldwio  r3, LED(r23)
-	andi   r3, r3, 0x3ff				# bit mask for health bar
-	srli   r4, r3, 2					# add two points of health
-	addi   r4, r4, 0b1100000000			# replace two most significant bits 
+	andi   r3, r3, 0x3ff			# bit mask for health bar
+	srli   r4, r3, 2			# add two points of health
+	addi   r4, r4, 0b1100000000		# replace two most significant bits 
 	stwio  r4, LED(r23)
 	beq    r8, r0, player_damaged		# if player didn't dodge first, take swing damage
-	movi   r8, 0						# reset dodge flag
+	movi   r8, 0				# reset dodge flag
 	br skele_combat_prompt
 heal_miscast:
 	movia r2, new_line
@@ -531,35 +531,35 @@ heal_miscast:
 	type
 	movia r2, new_line
 	type
-	ldwio  r3, LED(r23)					#  
-	slli   r4, r3, 4					#
-	stwio  r4, LED(r23)					#
-	andi   r4, r4, 0x3ff				# bit mask for health bar
-	beq    r4, r0, death				#
+	ldwio  r3, LED(r23)			#  
+	slli   r4, r3, 4			#
+	stwio  r4, LED(r23)			#
+	andi   r4, r4, 0x3ff			# bit mask for health bar
+	beq    r4, r0, death			#
 	beq    r8, r0, player_damaged		# if player didn't dodge first, take swing damage
-	movi   r8, 0						# reset dodge flag
+	movi   r8, 0				# reset dodge flag
 	br skele_combat_prompt
 	
 	
 /**************************
 * 	BOSS
 **************************/	
-boss_abilities:							# 
-	ldwio  r3, LED(r23)					# player takes 1 health point of damage every
-	slli   r4, r3, 1					# turn of combat with boss
-	stwio  r4, LED(r23)					#
-	andi   r4, r4, 0x3ff				# bit mask for health bar
-	beq    r4, r0, death				#
-	call random							# random number for boss behavior
-	ldw    r11, rand_numb(r0)			# r11 used for storing which ability the boss is 
-	cmpeqi r3, r11, 0					# currently doing
-	bne    r3, r0, boss_spell			#
-	cmpeqi r3, r11, 1					#
-	bne    r3, r0, boss_heal			#
-	cmpeqi r3, r11, 2					#
-	bne    r3, r0, boss_barrier			#
-boss_spell:								#
-	movia  r2, new_line					#
+boss_abilities:					# 
+	ldwio  r3, LED(r23)			# player takes 1 health point of damage every
+	slli   r4, r3, 1			# turn of combat with boss
+	stwio  r4, LED(r23)			#
+	andi   r4, r4, 0x3ff			# bit mask for health bar
+	beq    r4, r0, death			#
+	call random				# random number for boss behavior
+	ldw    r11, rand_numb(r0)		# r11 used for storing which ability the boss is 
+	cmpeqi r3, r11, 0			# currently doing
+	bne    r3, r0, boss_spell		#
+	cmpeqi r3, r11, 1			#
+	bne    r3, r0, boss_heal		#
+	cmpeqi r3, r11, 2			#
+	bne    r3, r0, boss_barrier		#
+boss_spell:					#
+	movia  r2, new_line			#
 	type
 	type
 	movia  r2, boss_spell_text
@@ -595,21 +595,21 @@ player_input:
 	br boss_combat
 player_attack:
 	beq    r11, r0, trade_damage		# if player attacks for boss spell, deal damage, but also take damage
-	cmpeqi r5,  r11, 1					#
-	bne    r5,  r0, deal_damage			# if player attacks during boss heal, deal damage
-	cmpeqi r5,  r11, 2					#
-	bne    r5,  r0, take_damage			# if player attacks during boss barrier, take damage
+	cmpeqi r5,  r11, 1			#
+	bne    r5,  r0, deal_damage		# if player attacks during boss heal, deal damage
+	cmpeqi r5,  r11, 2			#
+	bne    r5,  r0, take_damage		# if player attacks during boss barrier, take damage
 player_dodge:							
 	beq    r11, r0, avoid_damage		# if player dodges for boss spell, avoid damage
-	cmpeqi r5,  r11, 1					#
+	cmpeqi r5,  r11, 1			#
 	bne    r5,  r0, boss_heal_action	# if player dodges during boss heal, boss heals to full health
-	cmpeqi r5,  r11, 2					#
+	cmpeqi r5,  r11, 2			#
 	bne    r5,  r0, boss_abilities		# if player dodges during boss barrier, nothing happens
 player_heal:
-	beq    r11, r0, take_damage		 	# if player heals for boss spell, take damage
-	cmpeqi r5,  r11, 1					#
+	beq    r11, r0, take_damage		# if player heals for boss spell, take damage
+	cmpeqi r5,  r11, 1			#
 	bne    r5,  r0, boss_heal_action	# if player heals during boss heal, heal, but boss also heals
-	cmpeqi r5,  r11, 2					#
+	cmpeqi r5,  r11, 2			#
 	bne    r5,  r0, player_heal_action	# if player heals during boss barrier, heal for 2 points of health
 trade_damage:
 	movia  r2, new_line
@@ -620,11 +620,11 @@ trade_damage:
 	type
 	movia  r2, boss_spell_hit
 	type
-	subi   r20, r20, 1					# boss takes a point of damage
-	ldwio  r3, LED(r23)					# player takes 5 health point of damage
-	slli   r4, r3, 5					# 
-	stwio  r4, LED(r23)					#
-	andi   r4, r4, 0x3ff				# bit mask for health bar
+	subi   r20, r20, 1			# boss takes a point of damage
+	ldwio  r3, LED(r23)			# player takes 5 health point of damage
+	slli   r4, r3, 5			# 
+	stwio  r4, LED(r23)			#
+	andi   r4, r4, 0x3ff			# bit mask for health bar
 	beq    r4, r0, death
 	br boss_abilities
 deal_damage:
@@ -633,7 +633,7 @@ deal_damage:
 	type
 	movia  r2, boss_damaged_text
 	type
-	subi  r20, r20, 1					# boss takes damage
+	subi  r20, r20, 1			# boss takes damage
 	beq   r20, r0, win
 	br boss_abilities
 take_damage:
@@ -642,10 +642,10 @@ take_damage:
 	type
 	movia  r2, boss_spell_hit
 	type
-	ldwio  r3, LED(r23)					# player takes 5 health point of damage
-	slli   r4, r3, 5					# 
-	stwio  r4, LED(r23)					#
-	andi   r4, r4, 0x3ff				# bit mask for health bar
+	ldwio  r3, LED(r23)			# player takes 5 health point of damage
+	slli   r4, r3, 5			# 
+	stwio  r4, LED(r23)			#
+	andi   r4, r4, 0x3ff			# bit mask for health bar
 	beq    r4, r0, death
 	br boss_abilities
 avoid_damage:
@@ -661,10 +661,10 @@ boss_heal_action:
 	type
 	movia  r2, boss_heal_hit
 	type
-	movi   r20, 5						# boss health reset to 5
-	cmpeqi r5, r3, 4					#
+	movi   r20, 5				# boss health reset to 5
+	cmpeqi r5, r3, 4			#
 	bne    r5, r0, player_heal_action	# if player healed, go to heal action
-	br boss_abilities					#
+	br boss_abilities			#
 player_heal_action:	
 	movia  r2, new_line
 	type
@@ -672,9 +672,9 @@ player_heal_action:
 	movia  r2, player_heal_text
 	type
 	ldwio  r3, LED(r23)
-	andi   r3, r3, 0x3ff				# bit mask for health bar
-	srli   r4, r3, 2					# add two points of health
-	addi   r4, r4, 0b1100000000			# replace two most significant bits 
+	andi   r3, r3, 0x3ff			# bit mask for health bar
+	srli   r4, r3, 2			# add two points of health
+	addi   r4, r4, 0b1100000000		# replace two most significant bits 
 	stwio  r4, LED(r23)
 	br boss_abilities
 	
@@ -682,8 +682,8 @@ player_heal_action:
 /**************************
 * 	WIN & LOSE
 **************************/
-win:									# player win or lose text
-	clear_terminal						# looping back to start
+win:						# player win or lose text
+	clear_terminal				# looping back to start
 	movia r2, new_line
 	type
 	movia r2, win_text
@@ -712,35 +712,35 @@ death:
 *
 ***********************************************************/
 
-write: 							# r2 address of string
-	push  r16 					# stack
+write: 					# r2 address of string
+	push  r16 			# stack
 	push  r2
 write_char:
 	ldwio r16,     UART+4(r23)	# read control register
 	beq   r16, r0, write_char 	# does buffer have room ?
-	ldb   r16,(r2) 				# get string character
+	ldb   r16,(r2) 			# get string character
 	beq   r16, r0, _write 		# break if NULL terminator	
 	stwio r16,     UART(r23) 	# else write to UART
-	addi  r2,  r2, 1 			# index next character
-	br write_char 				# loop
+	addi  r2,  r2, 1 		# index next character
+	br write_char 			# loop
 _write:
 	pop   r2
-	pop   r16 					# unstack
+	pop   r16 			# unstack
 	ret
 	
 random:
-	push   r16                 # stack
-	push   r17                 #
-	ldw    r16, rand_seed(r0)  #  / fetch seed
-	addi   r16, r16, 1         # /
-	movia  r17, 3141592621     #|  make new seed
-	mul    r16, r16, r17       # \ 
-	stw    r16, rand_seed(r0)  #  \ store new seed
-	ldw    r17, rand_max (r0)  # generate number
-	mulxuu r16, r16, r17       # by pulling the hi 32-bits 
-	stw    r16, rand_numb(r0)  # random number stored in "rand"
-	pop    r17                 # unstack 
-	pop    r16                 # 
+	push   r16                 	# stack
+	push   r17                	#
+	ldw    r16, rand_seed(r0) 	#  / fetch seed
+	addi   r16, r16, 1        	# /
+	movia  r17, 3141592621     	#|  make new seed
+	mul    r16, r16, r17       	# \ 
+	stw    r16, rand_seed(r0)  	#  \ store new seed
+	ldw    r17, rand_max (r0)  	# generate number
+	mulxuu r16, r16, r17       	# by pulling the hi 32-bits 
+	stw    r16, rand_numb(r0)  	# random number stored in "rand"
+	pop    r17                 	# unstack 
+	pop    r16                 	# 
 	ret
 	
 	
@@ -750,40 +750,40 @@ random:
 *
 ***********************************************************/
 move_button:
-	ldwio r2,     BUTTON(r23)			# read button
-	andi  r2, r2, 0b01 					# bit mask for button
+	ldwio r2,     BUTTON(r23)		# read button
+	andi  r2, r2, 0b01 			# bit mask for button
 	bne   r2, r0, move_button_pressed 	# branch if button down
-	br move_button						#
-move_button_pressed:					#
-	ldwio r2, BUTTON(r23)				#
-	ldwio r3, SWITCH(r23)				#
-	andi  r2, r2, 0b01 					#
-	beq   r2, r0, move	 				#
-	br move_button_pressed 				#
+	br move_button				#
+move_button_pressed:				#
+	ldwio r2, BUTTON(r23)			#
+	ldwio r3, SWITCH(r23)			#
+	andi  r2, r2, 0b01 			#
+	beq   r2, r0, move	 		#
+	br move_button_pressed 			#
 	
 skele_combat_button:
-	ldwio r2,     BUTTON(r23)					# read button
-	andi  r2, r2, 0b01 							# bit mask for button
+	ldwio r2,     BUTTON(r23)			# read button
+	andi  r2, r2, 0b01 				# bit mask for button
 	bne   r2, r0, skele_combat_button_pressed	# branch if button down
-	br skele_combat_button						#
-skele_combat_button_pressed:					#
-	ldwio r2, BUTTON(r23)						#
-	ldwio r3, SWITCH(r23)						#
-	andi  r2, r2, 0b01 							#
-	beq   r2, r0, skele_combat	 				#
-	br skele_combat_button_pressed 				#
+	br skele_combat_button				#
+skele_combat_button_pressed:				#
+	ldwio r2, BUTTON(r23)				#
+	ldwio r3, SWITCH(r23)				#
+	andi  r2, r2, 0b01 				#
+	beq   r2, r0, skele_combat	 		#
+	br skele_combat_button_pressed 			#
 												
-boss_combat_button:								#
-	ldwio r2, BUTTON(r23)						#
-	andi  r2, r2, 0b01							#
-	bne   r2, r0, boss_button_pressed			#
-	br boss_combat_button						#
-boss_button_pressed:							#
-	ldwio r2, BUTTON(r23)						#
-	ldwio r3, SWITCH(r23)						#
-	andi  r2, r2, 0b01 							#
-	beq   r2, r0, player_input	 				#
-	br boss_button_pressed 						#
+boss_combat_button:					#
+	ldwio r2, BUTTON(r23)				#
+	andi  r2, r2, 0b01				#
+	bne   r2, r0, boss_button_pressed		#
+	br boss_combat_button				#
+boss_button_pressed:					#
+	ldwio r2, BUTTON(r23)				#
+	ldwio r3, SWITCH(r23)				#
+	andi  r2, r2, 0b01 				#
+	beq   r2, r0, player_input	 		#
+	br boss_button_pressed 				#
 	
 play_again_button:
 	ldwio r2, BUTTON(r23)
