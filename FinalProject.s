@@ -7,7 +7,7 @@
 
 /**********************************************************
 *
-* 						MACROS
+* 		MACROS
 *
 ***********************************************************/
 .macro push reg
@@ -108,7 +108,7 @@
 
 /**********************************************************
 *
-* 					MAIN BRANCH
+* 		MAIN BRANCH
 *
 ***********************************************************/
 
@@ -134,86 +134,86 @@ _stop: br _stop
 
 /**********************************************************
 *
-* 					MY SUBROUTINES
+* 		MY SUBROUTINES
 *
 ***********************************************************/
 	
-title: 							# Showing title to UART
-	movia r2, new_line			#
-	type						#
+title: 					# Showing title to UART
+	movia r2, new_line		#
+	type				#
 	movia r2, dotted_line 		#
-	type 						#
-	movia r2, new_line 			#
-	type 						#	
-	type 						#
+	type 				#
+	movia r2, new_line 		#
+	type 				#	
+	type 				#
 	movia r2, game_logo 		#
-	type 						#
-	movia r2, new_line 			#
-	type 						#
-	type 						#
+	type 				#
+	movia r2, new_line 		#
+	type 				#
+	type 				#
 	movia r2, dotted_line 		#
-	type 						#
+	type 				#
 	movia r2, game_start_prompt #
-	type 						#
-	ret 						#
+	type 				#
+	ret 				#
 	
-start_button:					#
+start_button:				#
 	ldwio r2, BUTTON(r23)		#
-	andi  r2, r2, 0b01			#
+	andi  r2, r2, 0b01		#
 	bne   r2, r0, start_check	#
-	br start_button				#
-start_check:					#
+	br start_button			#
+start_check:				#
 	ldwio r2, BUTTON(r23)		#
-	andi  r2, r2, 0b01			#
-	cmpeq r4, r2, r0			#
+	andi  r2, r2, 0b01		#
+	cmpeq r4, r2, r0		#
 	beq   r4, r0, start_check	#
-	ret							#
+	ret				#
 	
-intro:							# Introductory flavor text
-	movia r2, new_line			#
-	type						#
-	type						#
-	type						#
+intro:					# Introductory flavor text
+	movia r2, new_line		#
+	type				#
+	type				#
+	type				#
 	movia r2, game_intro1		#
-	type						#
-	movia r2, new_line			#
-	type						#
+	type				#
+	movia r2, new_line		#
+	type				#
 	movia r2, game_intro2		#
-	type						#
-	movia r2, new_line			#
-	type						#
+	type				#
+	movia r2, new_line		#
+	type				#
 	movia r2, game_intro3		#
-	type						#
-	ret							#
+	type				#
+	ret				#
 
 
 /**********************************************************
 *
-* 				MOVEMENT SUBROUTINES
+* 		MOVEMENT SUBROUTINES
 *
 ***********************************************************/
 	
-move:							# Move subroutine that branches to
-	movi r2, 1					# corresponding move subroutine 
+move:					# Move subroutine that branches to
+	movi r2, 1			# corresponding move subroutine 
 	beq  r2, r3, move_forward	# depending on user's selection
-	movi r2, 2					#
+	movi r2, 2			#
 	beq  r2, r3, move_right		#
-	movi r2, 4					#
+	movi r2, 4			#
 	beq  r2, r3, move_left		#
-	movi r2, 8					#
+	movi r2, 8			#
 	beq  r2, r3, move_back		#
-								# if a switch outside of 0-3 is used, 
-	br wall						# br to wall subroutine
+					# if a switch outside of 0-3 is used, 
+	br wall				# br to wall subroutine
 	
 /**************************
-* 		 FORWARD
+* 	 FORWARD
 **************************/
-move_forward:   					# move sub routines that see which
-	cmpeqi r5, r10, 4				# room the user is in and changes	
-	bne    r5, r0,  wall			# its value based on which direction
-	cmpeqi r5, r10, 6				# the player decides to go
-	bne    r5, r0,  wall			#
-	cmpeqi r5, r10, 8				# re-prompts user if moving to invalid area
+move_forward:   			# move sub routines that see which
+	cmpeqi r5, r10, 4		# room the user is in and changes	
+	bne    r5, r0,  wall		# its value based on which direction
+	cmpeqi r5, r10, 6		# the player decides to go
+	bne    r5, r0,  wall		#
+	cmpeqi r5, r10, 8		# re-prompts user if moving to invalid area
 	bne    r5, r0,  wall
 	cmpeqi r5, r10, 0
 	bne    r5, r0,  move_forward0
@@ -242,7 +242,7 @@ move_forward5:
 	br empty
 	
 /**************************
-* 		  RIGHT
+* 	RIGHT
 **************************/
 move_right:
 	cmpeqi r5, r10, 2
@@ -278,7 +278,7 @@ move_right6:
 	br boss
 	
 /**************************
-* 		  LEFT
+* 	LEFT
 **************************/
 move_left:
 	cmpeqi r5, r10, 0
@@ -314,7 +314,7 @@ move_left8:
 	br boss
 	
 /**************************
-* 		  BACK
+* 	BACK
 **************************/
 move_back:
 	cmpeqi r5, r10, 0
@@ -352,7 +352,7 @@ move_back8:
 	
 /**********************************************************
 *
-* 						ROOMS
+* 			ROOMS
 *
 ***********************************************************/	
 wall:
@@ -405,12 +405,12 @@ boss:
 	
 /**********************************************************
 *
-* 				 COMBAT SUBROUTINES
+* 		COMBAT SUBROUTINES
 *
 ***********************************************************/
 
 /**************************
-* 		 SKELETON
+* 	SKELETON
 **************************/
 skele_combat_prompt:
 	bne    r8, r0, dodge_skip			# if user dodged last attack, skeleton is stunned
@@ -542,7 +542,7 @@ heal_miscast:
 	
 	
 /**************************
-* 		  BOSS
+* 	BOSS
 **************************/	
 boss_abilities:							# 
 	ldwio  r3, LED(r23)					# player takes 1 health point of damage every
@@ -680,7 +680,7 @@ player_heal_action:
 	
 	
 /**************************
-* 		WIN & LOSE
+* 	WIN & LOSE
 **************************/
 win:									# player win or lose text
 	clear_terminal						# looping back to start
@@ -708,7 +708,7 @@ death:
 	
 /**********************************************************
 *
-* 			SUBROUTINES BY MARVIN JOHNSON
+* 	SUBROUTINES BY MARVIN JOHNSON
 *
 ***********************************************************/
 
@@ -746,7 +746,7 @@ random:
 	
 /**********************************************************
 *
-* 		  BUTTON SUBROUTINES BY MARVIN JOHNSON
+* 		BUTTON SUBROUTINES
 *
 ***********************************************************/
 move_button:
@@ -799,7 +799,7 @@ play_again_button_pressed:
 	
 /**********************************************************
 *
-* 						DATA
+* 			DATA
 *
 ***********************************************************/
 .org 0x2000
@@ -816,7 +816,7 @@ game_intro2:         .asciz "An evil sorceror is said to be held up in a nearby 
 game_intro3:         .asciz "You decide to venture within to vanquish the evil."
 
 /**************************
-* 	 MOVEMENT PROMPTS
+* MOVEMENT PROMPTS
 **************************/
 forward_prompt:      .asciz "[0] Move Forward"
 right_prompt:        .asciz "[1] Move Right"
@@ -826,7 +826,7 @@ prompt:              .asciz "You decide to:"
 wall_text:  	     .asciz "You go in that direction, but you find only a solid wall."
   
 /**************************
-* 	  ROOM PROMPTS
+* ROOM PROMPTS
 **************************/
 skele_room:          .asciz "You enter a room and within a raised skeleton snaps to life."
 empty_room:   	     .asciz "You enter a room and your footsteps echo. Completely Empty."
@@ -835,7 +835,7 @@ boss_room:    	     .asciz "You enter a dark room and see a thin, hooded figure.
 boss_room2:		     .asciz "A strange aura envelops you. It seems to be draining your life force."
 
 /**************************
-* 	 COMBAT PROMPTS
+* COMBAT PROMPTS
 **************************/
 attack_prompt:	  	 .asciz "[0] Attack"
 dodge_prompt:	  	 .asciz "[1] Dodge"
@@ -879,14 +879,14 @@ rand_numb: .word 0        # store random number here
 ***********************************************************/
 
 /**************************
-* 		   INTRO
+* 	 INTRO
 **************************/
 Upon starting the game, you will be presented with a graphic
 and a prompt to press button 0 to start the game. Once you
 release button 0, the game will start.
 
 /**************************
-* 		 MOVEMENT
+* 	 MOVEMENT
 **************************/
 You will begin in room 1, which is an empty room. You will be 
 able to navigate rooms by using switches 0 - 3 for their 
@@ -896,7 +896,7 @@ and then prompt you to select a new direciton.
 
 
 /**************************
-* 		   ROOMS
+* 	ROOMS
 **************************/
 There are 4 different rooms that you can encounter in this game:
 
@@ -918,7 +918,7 @@ active. The same rule applies to skeleton rooms.
 
 
 /**************************
-* 		FINAL BOSS
+* 	FINAL BOSS
 **************************/
 The final boss has three unique abilities as well as a passive aura
 that surrounds the player. The aura deals 1 point of health damage 
@@ -939,7 +939,7 @@ The boss' three abilities are:
 		
 
 /**************************
-* 		   MAP
+* 	MAP
 **************************/
 
 +--------+		+--------+		+--------+
