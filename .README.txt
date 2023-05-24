@@ -6,6 +6,8 @@ Organizations (CISP2410) class at Columbia State. It's a simple game where you
 delve into a dungeon to avoid traps, fight monsters, and defeat a
 final boss.
 
+This program run on the NIOS II DE-10 Lite computer which can be used [here](#https://cpulator.01xz.net/?sys=nios-de10-lite).
+
 Upon starting the game, you will be presented with a graphic
 and a prompt to press button 0 to start the game. Once you
 release button 0, the game will start.
